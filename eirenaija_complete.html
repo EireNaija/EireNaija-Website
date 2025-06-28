@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EireNaija - Where Cultures Unite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Flag corners */
+        .flag-corner {
+            position: fixed;
+            width: 60px;
+            height: 40px;
+            z-index: 1000;
+            opacity: 0.1;
+            transition: opacity 0.3s ease;
+        }
+
+        .flag-corner:hover {
+            opacity: 0.3;
+        }
+
+        .irish-flag {
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(to right, #169B62 33%, #ffffff 33% 66%, #ff8c42 66%);
+        }
+
+        .nigerian-flag {
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(to right, #008751 50%, #ffffff 50%);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 999;
+            padding: 0 2rem;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #169B62;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fafafa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            letter-spacing: -2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: #169B62;
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #008751;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(22, 155, 98, 0.3);
+        }
+
+        /* Floating cultural elements */
+        .cultural-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .cultural-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.05;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .cultural-icon:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+        .cultural-icon:nth-child(2) { top: 30%; right: 20%; animation-delay: 2s; }
+        .cultural-icon:nth-child(3) { bottom: 25%; left: 25%; animation-delay: 4s; }
+        .cultural-icon:nth-child(4) { bottom: 35%; right: 15%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Content sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        /* Mission section */
+        .mission {
+            background: #f8f8f8;
+        }
+
+        .mission-content {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #555;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Blog grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
+            padding: 2rem;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            border-color: #169B62;
+        }
+
+        .blog-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .category-tag {
+            background: #f8f8f8;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Gist & Banter section styles */
+        .gist-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .gist-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .gist-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .gist-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border-left: 4px solid #169B62;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gist-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(22, 155, 98, 0.03) 100%);
+            z-index: 1;
+        }
+
+        .gist-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .gist-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-left-color: #008751;
+        }
+
+        .gist-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #169B62;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .gist-type.opinion { background: #6f42c1; }
+        .gist-type.tea { background: #fd7e14; }
+        .gist-type.buzz { background: #dc3545; }
+        .gist-type.vibes { background: #20c997; }
+
+        .gist-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .gist-preview {
+            color: #666;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .gist-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .gist-author {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .gist-reactions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .reaction {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .gist-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #f0f0f0;
+        }
+
+        .widget-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .widget-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .trending-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-item:hover {
+            padding-left: 0.5rem;
+            color: #169B62;
+        }
+
+        .trending-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .trending-meta {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .poll-widget {
+            text-align: center;
+        }
+
+        .poll-question {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .poll-option {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poll-option:hover {
+            background: #e9ecef;
+            border-color: #169B62;
+        }
+
+        .poll-option.selected {
+            background: rgba(22, 155, 98, 0.1);
+            border-color: #169B62;
+            color: #169B62;
+        }
+
+        .poll-result {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(22, 155, 98, 0.1) 0%, transparent 100%);
+            transition: width 0.3s ease;
+            z-index: 1;
+        }
+
+        .poll-option span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            opacity: 0.7;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Merchandise section */
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .merch-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .merch-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        }
+
+        .merch-image {
+            height: 200px;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #169B62;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .merch-content {
+            padding: 2rem;
+        }
+
+        .merch-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.8rem;
+        }
+
+        .merch-description {
+            color: #666;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .merch-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #169B62;
+            margin-bottom: 1.5rem;
+        }
+
+        .merch-button {
+            background: #f8f8f8;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .merch-button:hover {
+            background: #169B62;
+            color: white;
+            border-color: #169B62;
+        }
+
+        /* Merch features */
+        .merch-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: #f8f8f8;
+            border-radius: 12px;
+        }
+
+        .merch-feature {
+            text-align: center;
+        }
+
+        .merch-feature .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .merch-feature h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .merch-feature p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .footer-quote {
+            font-style: italic;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #169B62;
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .flag-corner {
+                width: 40px;
+                height: 27px;
+            }
+
+            .nav-content {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .blog-grid,
+            .features-grid,
+            .merch-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .gist-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .gist-card {
+                padding: 1.5rem;
+            }
+
+            .merch-features {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 2rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: rgba(22, 155, 98, 0.2);
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Flag corners -->
+    <div class="flag-corner irish-flag"></div>
+    <div class="flag-corner nigerian-flag"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="#" class="logo">EireNaija</a>
+            <ul class="nav-links">
+                <li><a href="#stories">Stories</a></li>
+                <li><a href="#gist">Gist & Banter</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#merch">Shop</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="cultural-elements">
+            <span class="cultural-icon">🍀</span>
+            <span class="cultural-icon">🦅</span>
+            <span class="cultural-icon">🎵</span>
+            <span class="cultural-icon">🤝</span>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">EireNaija</h1>
+            <p class="hero-subtitle">Where Irish Hearts Meet Nigerian Souls</p>
+            <p class="hero-description">
+                Celebrating the fusion of cultures, amplifying minority voices, and building bridges across communities in Ireland
+            </p>
+            <a href="#stories" class="cta-button">Explore Stories</a>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section mission" id="about">
+        <h2 class="section-title">Our Mission</h2>
+        <div class="mission-content">
+            EireNaija is more than a blog—it's a movement. We create space for the beautiful collision of Irish and Nigerian cultures while amplifying the voices of minority communities across Ireland. We believe in the power of shared narratives to build understanding, create connection, and celebrate the richness that diversity brings to our communities.
+        </div>
+    </section>
+
+    <!-- Featured Stories -->
+    <section class="section" id="stories">
+        <h2 class="section-title">Featured Stories</h2>
+        <p class="section-subtitle">Real voices, authentic experiences, and the stories that shape our communities</p>
+        
+        <div class="blog-grid">
+            <article class="blog-card">
+                <span class="blog-icon">👥</span>
+                <h3 class="blog-title">From Lagos to Dublin: A Journey of Two Homes</h3>
+                <p class="blog-excerpt">Exploring the beautiful complexity of maintaining Nigerian identity while embracing Irish culture. Stories of adaptation, celebration, and the courage to be authentically both.</p>
+                <div class="blog-meta">
+                    <span class="category-tag">Cultural Fusion</span>
+                    <span>5 min read</span>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-icon">🎨</span>
+                <h3 class="blog-title">The Art of Belonging: Minority Creatives in Ireland</h3>
+                <p class="blog-excerpt">Spotlight on artists, musicians, and writers from minority backgrounds who are reshaping Ireland's cultural landscape with their bold expressions.</p>
+                <div class="blog-meta">
+                    <span class="category-tag">Arts & Culture</span>
+                    <span>7 min read</span>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-icon">🤝</span>
+                <h3 class="blog-title">Community Voices: Building Bridges Across Differences</h3>
+                <p class="blog-excerpt">Real stories from community leaders, activists, and everyday heroes working to create more inclusive spaces for all minorities in Ireland.</p>
+                <div class="blog-meta">
+                    <span class="category-tag">Community</span>
+                    <span>6 min read</span>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-icon">🍲</span>
+                <h3 class="blog-title">Flavors of Home: Nigerian-Irish Fusion Cuisine</h3>
+                <p class="blog-excerpt">Discover how traditional Nigerian recipes are getting an Irish twist, and how local Irish ingredients are finding their way into beloved Nigerian dishes.</p>
+                <div class="blog-meta">
+                    <span class="category-tag">Food & Culture</span>
+                    <span>4 min read</span>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-icon">💼</span>
+                <h3 class="blog-title">Breaking Barriers: Minority Entrepreneurs in Ireland</h3>
+                <p class="blog-excerpt">Profiles of successful business owners and entrepreneurs from minority backgrounds who are creating opportunities and inspiring the next generation.</p>
+                <div class="blog-meta">
+                    <span class="category-tag">Business</span>
+                    <span>8 min read</span>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-icon">🎓</span>
+                <h3 class="blog-title">Education and Identity: Raising Third Culture Kids</h3>
+                <p class="blog-excerpt">The unique challenges and opportunities faced by children growing up between cultures, and how families are navigating identity formation.</p>
+                <div class="blog-meta">
+                    <span class="category-tag">Family & Identity</span>
+                    <span>6 min read</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Gist & Banter -->
+    <section class="section gist-section" id="gist">
+        <h2 class="section-title">Gist & Banter</h2>
+        <p class="section-subtitle">The real talk, the tea, the vibes—unfiltered thoughts from the community</p>
+        
+        <div class="gist-grid">
+            <div class="gist-main">
+                <article class="gist-card">
+                    <span class="gist-type tea">The Tea</span>
+                    <h3 class="gist-title">Why Some Nigerian Parents Still Think Dublin = London</h3>
+                    <p class="gist-preview">"Mummy, I'm in Dublin." "Oh, London! How's the Queen?" Every. Single. Time. Can we please update the geography lessons? 😅</p>
+                    <div class="gist-meta">
+                        <span class="gist-author">By Chidi</span>
+                        <div class="gist-reactions">
+                            <span class="reaction">😂 47</span>
+                            <span class="reaction">💬 23</span>
+                            <span class="reaction">👏 15</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gist-card">
+                    <span class="gist-type opinion">Hot Take</span>
+                    <h3 class="gist-title">Irish Weather vs Nigerian Patience: An Ongoing Battle</h3>
+                    <p class="gist-preview">Five years in Ireland and I still check the weather app 10 times before leaving the house. My umbrella has become my best friend, and I'm not ashamed.</p>
+                    <div class="gist-meta">
+                        <span class="gist-author">By Kemi O.</span>
+                        <div class="gist-reactions">
+                            <span class="reaction">☔ 89</span>
+                            <span class="reaction">💬 34</span>
+                            <span class="reaction">😩 42</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gist-card">
+                    <span class="gist-type buzz">Community Buzz</span>
+                    <h3 class="gist-title">That Moment When Temple Bar Played Afrobeats...</h3>
+                    <p class="gist-preview">Last Saturday was EVERYTHING! Seeing Irish folks vibing to Burna Boy while sipping Guinness? Peak cultural fusion achieved. We've officially arrived! 🔥</p>
+                    <div class="gist-meta">
+                        <span class="gist-author">By DJ Naija_Dub</span>
+                        <div class="gist-reactions">
+                            <span class="reaction">🔥 156</span>
+                            <span class="reaction">💬 67</span>
+                            <span class="reaction">🎵 28</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gist-card">
+                    <span class="gist-type vibes">Good Vibes</span>
+                    <h3 class="gist-title">Spotted: Nigerian Auntie Teaching Irish Granny How to Tie Gele</h3>
+                    <p class="gist-preview">At the Dundrum shopping
